@@ -16,66 +16,33 @@ import {theme} from '../config';
 
 const heroUrlWebm = assetUrl('../../static/hero.webm');
 
-const overlayItems = [
-  {
-    content: (
-      <FlyIn delay={1000}>
-        <Heading fontSize="6xl" color="white">
-          Sports
-        </Heading>
-      </FlyIn>
-    ),
-    position: {
-      left: '10%',
-      top: '40%',
-    },
-  },
-  {
-    content: (
-      <FlyIn delay={2000}>
-        <Heading fontSize="6xl" color="white">
-          Weddings & Events
-        </Heading>
-      </FlyIn>
-    ),
-    position: {
-      left: '10%',
-      top: '50%',
-    },
-  },
-  {
-    content: (
-      <FlyIn delay={3000}>
-        <Heading fontSize="6xl" color="white">
-          Commercial Marketing
-        </Heading>
-      </FlyIn>
-    ),
-    position: {
-      left: '10%',
-      top: '60%',
-    },
-  },
-  {
-    content: (
-      <FlyIn from="bottom" delay={1}>
-        <Box w="400">
-          <Button w="200px">Contact</Button>
-          <Box w="100%" h="4" />
-          <Button w="200px">Portfolio</Button>
-        </Box>
-      </FlyIn>
-    ),
-    position: {
-      right: '10em',
-      top: '50%',
-    },
-  },
-];
-
 const Home = () => (
   <Box>
-    <Overlay items={overlayItems}>
+    <Overlay>
+      <Box
+        style={{overflow: 'hidden'}}
+        w="100vw"
+        display={['none', 'none', 'block']}
+      >
+        <Flex w="100%" h="calc((9 / 21) * 100vw)" px={[0, 40]}>
+          <Flex
+            h="100%"
+            alignItems="flex-start"
+            justifyContent={['center']}
+            direction="column"
+          >
+            {['Sports', 'Weddings & Events', 'Commercial Marketing'].map(
+              (item, i) => (
+                <FlyIn key={`fly-in-text-${i}`} delay={(i + 1) * 1000}>
+                  <Heading m={0} fontSize={['xl', '6xl']} color="white">
+                    {item}
+                  </Heading>
+                </FlyIn>
+              )
+            )}
+          </Flex>
+        </Flex>
+      </Box>
       <AspectRatioBox m={0} ratio={21 / 9}>
         <Box>
           <video style={{width: '100%', height: '100%'}} autoPlay loop>
