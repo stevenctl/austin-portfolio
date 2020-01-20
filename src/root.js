@@ -12,6 +12,7 @@ const root = (
   <ThemeProvider theme={theme}>
     <Helmet>
       <link rel="stylesheet" href={assetUrl('../static/style.css')} />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sintony&display=swap"/>
     </Helmet>
     <Header {...header} />
     <Switch>

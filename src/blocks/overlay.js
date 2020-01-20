@@ -1,17 +1,12 @@
 import React from 'react';
 
 const OverlayItem = ({item}) => {
-  const styles = {position: 'absolute'};
-  if (item.x) {
-    styles.left = item.x;
-  }
-  if (item.y) {
-    styles.top = item.y;
-  }
-
+  const position = item.position || {};
+  const styles = {position: 'absolute', ...position};
   return <div style={styles}>{item.content}</div>;
 };
 
+// TODO(slandow) support theme styles and responsive values
 const Overlay = ({items, children}) => (
   <div style={{position: 'relative', textAlign: 'center'}}>
     {children}

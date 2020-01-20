@@ -2,10 +2,10 @@ import {theme} from '@chakra-ui/core';
 
 export default {
   ...theme,
-  accent: 'yellow.400',
+  accent: 'yellow.500',
   fonts: {
-    body: '"Verdana"',
-    heading: '"Verdana Header"',
+    body: 'Sintony, sans-serif',
+    heading: 'Sintony, sans-serif',
     mono: 'Menlo, monospace',
   },
 };

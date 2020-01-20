@@ -1,9 +1,10 @@
 import React from 'react';
-import {Box, Flex, Image, Link, Text} from '@chakra-ui/core';
+import {Flex, Image, Link, Text} from '@chakra-ui/core';
 import {theme} from '../config';
 import useWindowScroll from '@react-hook/window-scroll';
 
 const dockedStyle = {
+  transition: 'background-color 1s ease',
   display: 'block',
   position: 'fixed',
   zIndex: 10,
@@ -24,7 +25,6 @@ const Header = ({whiteLogoUrl, blackLogoUrl, links}) => {
   const scrollY = useWindowScroll(10);
   const atTop = scrollY === 0;
 
-  const logoUrl = atTop ? whiteLogoUrl : blackLogoUrl;
   const bg = atTop ? '#0000' : '#FFF';
 
   return (
@@ -36,7 +36,18 @@ const Header = ({whiteLogoUrl, blackLogoUrl, links}) => {
           h="96px"
           px={[0, 40]}
         >
-          <Image h="100%" alt="logo" src={logoUrl} />
+          <Image
+            display={atTop ? 'block' : 'none'}
+            h="100%"
+            alt="logo"
+            src={whiteLogoUrl}
+          />
+          <Image
+            display={!atTop ? 'block' : 'none'}
+            h="100%"
+            alt="logo"
+            src={blackLogoUrl}
+          />
           <Flex>
             {links.map((item, i) => (
               <NavItem key={`navlink-${i}`} {...item} white={atTop} />
