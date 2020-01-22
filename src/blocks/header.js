@@ -1,5 +1,18 @@
-import React from 'react';
-import {Flex, Image, Link, Text} from '@chakra-ui/core';
+import React, {useState} from 'react';
+import {
+  Flex,
+  Box,
+  IconButton,
+  Image,
+  Link,
+  Text,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  useDisclosure,
+  DrawerCloseButton,
+} from '@chakra-ui/core';
 import {theme} from '../config';
 import useWindowScroll from '@react-hook/window-scroll';
 
@@ -21,13 +34,33 @@ const NavItem = ({text, href, white}) => (
   </Flex>
 );
 
-const RegularNav = ({links, atTop}) => (
-  <Flex>
+const Nav = ({links, atTop, ...rest}) => (
+  <Flex {...rest}>
     {links.map((item, i) => (
       <NavItem key={`navlink-${i}`} {...item} white={atTop} />
     ))}
   </Flex>
 );
+
+const MobileNav = ({links, atTop, ...rest}) => {
+  const {isOpen, onOpen, onClose} = useDisclosure();
+  const btnRef = React.useRef();
+
+  return (
+    <Box pr={4} {...rest}>
+      <IconButton ref={btnRef} onClick={onOpen} icon={'chevron-down'} />
+      <Drawer isOpen={isOpen} onClose={onClose} finalFocusRef={btnRef}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerBody display="flex" justify="center">
+            <Nav w="100%" direction="column" links={links} />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Box>
+  );
+};
 
 const Header = ({whiteLogoUrl, blackLogoUrl, links}) => {
   const scrollY = useWindowScroll(10);
@@ -42,7 +75,8 @@ const Header = ({whiteLogoUrl, blackLogoUrl, links}) => {
           justifyContent="space-between"
           alignItems="center"
           h="96px"
-          px={[0, 0, 40]}
+          pr={[0, 0, 40]}
+          pl={[4, 4, 40]}
         >
           <Image
             display={atTop ? 'block' : 'none'}
@@ -56,7 +90,12 @@ const Header = ({whiteLogoUrl, blackLogoUrl, links}) => {
             alt="logo"
             src={blackLogoUrl}
           />
-          <RegularNav links={links} atTop={atTop} />
+          <Nav links={links} atTop={atTop} display={['none', 'flex', 'flex']} />
+          <MobileNav
+            display={['flex', 'none', 'none']}
+            links={links}
+            atTop={atTop}
+          />
         </Flex>
       </div>
     </div>

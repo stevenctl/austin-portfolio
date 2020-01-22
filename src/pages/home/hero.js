@@ -1,13 +1,15 @@
+import {AspectRatioBox, Box, Flex, Heading} from '@chakra-ui/core';
+import Overlay from '../../blocks/overlay';
+import Slide from '../../animators/slide';
 import React from 'react';
-import {AspectRatioBox, Box, Heading, Flex} from '@chakra-ui/core';
 import {assetUrl} from 'fusion-core';
-import Overlay from '../blocks/overlay';
-import Slide from '../animators/slide';
 
-const heroUrlWebm = assetUrl('../../static/hero.webm');
+const heroVideoUrl = assetUrl('../../../static/hero.webm');
+const heroVideoType = 'video/webm';
+
 const overlayText = ['Sports', 'Weddings & Events', 'Commercial Marketing'];
 
-const Home = () => (
+const Hero = _ => (
   <Box>
     <Overlay>
       <Box
@@ -20,11 +22,10 @@ const Home = () => (
             h="100%"
             direction="column"
             alignItems="flex-start"
-            justifyContent="flex-end"
+            justifyContent="center"
           >
             {overlayText.map((item, i) => (
               <Slide
-                mb={i === overlayText.length - 1 ? 4 : 0} // hack: giving last element margin b/c flex-padding won't work
                 key={`fly-in-text-${i}`}
                 enterDelay={(i + 1) * 1000}
                 exitDelay={(overlayText.length - i + 1) * 1000 + 10000} // first term makes all exit at once, second term makes them all stay together longer
@@ -40,7 +41,7 @@ const Home = () => (
       <AspectRatioBox m={0} ratio={21 / 9}>
         <Box>
           <video style={{width: '100%', height: '100%'}} autoPlay loop>
-            <source src={heroUrlWebm} type="video/webm" />
+            <source src={heroVideoUrl} type={heroVideoType} />
           </video>
         </Box>
       </AspectRatioBox>
@@ -48,4 +49,4 @@ const Home = () => (
   </Box>
 );
 
-export default Home;
+export default Hero;
