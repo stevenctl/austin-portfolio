@@ -26,6 +26,7 @@ const Hero = _ => (
           >
             {overlayText.map((item, i) => (
               <Slide
+                left
                 key={`fly-in-text-${i}`}
                 enterDelay={(i + 1) * 1000}
                 exitDelay={(overlayText.length - i + 1) * 1000 + 10000} // first term makes all exit at once, second term makes them all stay together longer

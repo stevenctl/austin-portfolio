@@ -1,35 +1,46 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Box} from '@chakra-ui/core';
 
+const DISTANCE = 120;
+
 const Slide = ({
-  from = 'left',
   enterDelay = 1000,
   exitDelay = 1000,
   speed = '0.5s',
   cycle = false,
+
+  startShowing = false,
+
+  top = false,
+  bottom = false,
+  left = false,
+  right = false,
+
   ...props
 }) => {
   const [show, setShow] = useState(false);
-
+  const scheduleFunc = cycle ? setInterval : setTimeout;
+  const showRef = useRef(show);
   useEffect(() => {
-    const scheduleFunc = cycle ? setInterval : setTimeout;
-    scheduleFunc(() => setShow(!show), show ? exitDelay : enterDelay);
-  }, [cycle, enterDelay, exitDelay, show]);
+    scheduleFunc(
+      () => setShow(!showRef.current),
+      showRef.current ? exitDelay : enterDelay
+    );
+  }, [cycle, enterDelay, exitDelay, scheduleFunc, show]);
 
   let ix = 0;
   let iy = 0;
-  switch (from) {
-    case 'left':
-      ix = '-100%';
-      break;
-    case 'right':
-      ix = '100%';
-      break;
-    case 'top':
-      iy = '-100%';
-      break;
-    case 'bottom':
-      iy = '100%';
+  if (top) {
+    iy -= DISTANCE;
+  }
+  if (bottom) {
+    iy += DISTANCE;
+  }
+  if (left) {
+    ix -= DISTANCE;
+  }
+  if (right) {
+    ix += DISTANCE;
   }
 
   const {children, ...rest} = props;
@@ -38,7 +49,7 @@ const Slide = ({
       <div
         style={{
           transition: `transform ${speed} ease`,
-          transform: show ? 'translate(0, 0)' : `translate(${ix}, ${iy})`,
+          transform: show ? 'translate(0, 0)' : `translate(${ix}%, ${iy}%)`,
         }}
       >
         {children}
