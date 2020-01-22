@@ -1,15 +1,20 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {Box} from '@chakra-ui/core';
 
-const FlyIn = ({children, from = 'left', delay = 1000, speed = '0.5s'}) => {
+const Slide = ({
+  from = 'left',
+  enterDelay = 1000,
+  exitDelay = 1000,
+  speed = '0.5s',
+  cycle = false,
+  ...props
+}) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (show) return;
-    setTimeout(() => {
-      console.log('show');
-      setShow(true);
-    }, delay);
-  }, [delay, show]);
+    const scheduleFunc = cycle ? setInterval : setTimeout;
+    scheduleFunc(() => setShow(!show), show ? exitDelay : enterDelay);
+  }, [cycle, enterDelay, exitDelay, show]);
 
   let ix = 0;
   let iy = 0;
@@ -27,8 +32,9 @@ const FlyIn = ({children, from = 'left', delay = 1000, speed = '0.5s'}) => {
       iy = '100%';
   }
 
+  const {children, ...rest} = props;
   return (
-    <div style={{overflow: 'hidden'}}>
+    <Box {...rest} style={{overflow: 'hidden'}}>
       <div
         style={{
           transition: `transform ${speed} ease`,
@@ -37,8 +43,8 @@ const FlyIn = ({children, from = 'left', delay = 1000, speed = '0.5s'}) => {
       >
         {children}
       </div>
-    </div>
+    </Box>
   );
 };
 
-export default FlyIn;
+export default Slide;

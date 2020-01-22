@@ -21,6 +21,14 @@ const NavItem = ({text, href, white}) => (
   </Flex>
 );
 
+const RegularNav = ({links, atTop}) => (
+  <Flex>
+    {links.map((item, i) => (
+      <NavItem key={`navlink-${i}`} {...item} white={atTop} />
+    ))}
+  </Flex>
+);
+
 const Header = ({whiteLogoUrl, blackLogoUrl, links}) => {
   const scrollY = useWindowScroll(10);
   const atTop = scrollY === 0;
@@ -34,7 +42,7 @@ const Header = ({whiteLogoUrl, blackLogoUrl, links}) => {
           justifyContent="space-between"
           alignItems="center"
           h="96px"
-          px={[0, 40]}
+          px={[0, 0, 40]}
         >
           <Image
             display={atTop ? 'block' : 'none'}
@@ -48,11 +56,7 @@ const Header = ({whiteLogoUrl, blackLogoUrl, links}) => {
             alt="logo"
             src={blackLogoUrl}
           />
-          <Flex>
-            {links.map((item, i) => (
-              <NavItem key={`navlink-${i}`} {...item} white={atTop} />
-            ))}
-          </Flex>
+          <RegularNav links={links} atTop={atTop} />
         </Flex>
       </div>
     </div>
