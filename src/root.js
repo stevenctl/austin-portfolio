@@ -11,6 +11,7 @@ import {assetUrl} from 'fusion-core';
 const root = (
   <ThemeProvider theme={theme}>
     <Helmet>
+      <title>Austin Landow - Video Production</title>
       <link rel="stylesheet" href={assetUrl('../static/style.css')} />
       <link
         rel="stylesheet"
