@@ -9,8 +9,30 @@ const CLIENT_SECRET = 'gxbXWuEg4nS3NuPtFMmGYZHw5sYGVPj5r1cCjhn2H/uAAaTCGSZFdFU37
 
 const router = Router();
 
-const cache = { token: null }; // stores values of shape {value: any, ts: Number}
-const TTL = 1000 * 60 * 30; // 30 mins
+const MINUTE = 1000 * 60;
+const cache = {
+  token: {
+    ttl: 30 * MINUTE,
+  },
+  showcases: {
+    ttl: 10 * MINUTE,
+  },
+  set(key, value) {
+    this[key].value = value;
+    this[key].ts = new Date().getTime();
+  },
+  get(key, allowExpired = false) {
+    const item = this[key];
+    if (
+      !item || !item.ts
+        || (!allowExpired && new Date().getTime() - item.ts > (item.ttl || MINUTE))
+    ) {
+      return null;
+    }
+
+    return item.value;
+  }
+}; // stores values of shape {value: any, ts: Number}
 
 function conf() {
   return {
@@ -23,12 +45,12 @@ function conf() {
 
 function authenticate() {
   return new Promise((resolve, reject) => {
-    if (cache.token && new Date().getTime() - cache.token.ts < TTL) {
-      resolve(cache.token.value);
+    const cachedToken = cache.get('token');
+    if (cachedToken) {
+      resolve(cachedToken);
       return;
     }
-
-    console.log('INFO', 'Getting a new access token...')
+    console.log('INFO', 'Getting a new access token...');
     axios.post(
       'https://api.vimeo.com/oauth/authorize/client',
       {
@@ -43,8 +65,9 @@ function authenticate() {
         },
       }
     ).then((res) => {
-      cache.token = { ts: new Date().getTime(), value: res.data.access_token };
-      resolve(cache.token.value);
+      const accessToken = res.data.access_token;
+      cache.set('token', accessToken);
+      resolve(accessToken);
     }).catch((e) => reject(e));
   });
 }
@@ -58,12 +81,24 @@ const mapVideo = (video) => ({
   pictures: video.pictures.sizes.map((pic) => pic.link)
 });
 
-function handleError(e, next) {
-  console.error(e);
-  next(e);
-}
 
 router.get('/api/showcases', (req, res, next) => {
+  const cachedResponse = cache.get('showcases');
+  if (cachedResponse) {
+    res.json(cachedResponse);
+    return;
+  }
+
+
+  function handleError(e) {
+    const expiredCachedResponse = cache.get('showcases', true);
+    if (!expiredCachedResponse) {
+      next(e);
+      return;
+    }
+    res.json(expiredCachedResponse);
+  }
+
   authenticate().then((_) => {
     axios.get(`https://api.vimeo.com/users/${USER_ID}/albums`, conf()).then((showcasesRes) => {
       const showcases = showcasesRes.data.data;
@@ -73,10 +108,11 @@ router.get('/api/showcases', (req, res, next) => {
         results.forEach((vidRes, i) => {
           payload[showcases[i].name] = vidRes.data.data.map(mapVideo);
         });
+        cache.set('showcases', payload);
         res.json(payload);
-      }).catch((e) => handleError(e, next));
-    }).catch((e) => handleError(e, next));
-  }).catch((e) => handleError(e, next));
+      }).catch(handleError);
+    }).catch(handleError);
+  }).catch(handleError);
 });
 
 
