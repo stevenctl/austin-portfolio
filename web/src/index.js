@@ -1,40 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
-import {getVideos} from './fetcher';
+import {fetchShowcases} from './vimeo';
 import ReactFullpage from '@fullpage/react-fullpage';
-import HomeContent from './home';
+import Home from './home';
 import CategoryPage from './category-page';
 import Header from './header';
+import Porfolio from './porfolio';
 
 
 const allowedTags = [
     'Lindenwood', 'Purler', 'Wedding', 'Travel'
 ];
 
+const Fullpage = props => <div className="section" {...props} />
+
 const Root = () => {
-    const [videos, setVideos] = useState(null);
+    const [showcases, setShowcases] = useState(null);
     useEffect(() => {
-        getVideos().then(setVideos);
+        fetchShowcases().then(setShowcases);
     });
 
-    const [tags, setTags] = useState(null);
-    if (videos && !tags) {
-        const temp = {};
-        videos.forEach(v => v.tags.forEach(t => {
-            if (!allowedTags.find((ft) => ft === t)) {
-                console.log(`Filtered ${t}`);
-                return;
-            }
-            if (!temp[t]) {
-                temp[t] = [];
-            }
-            temp[t].push(v);
-        }));
-        setTags(temp);
-    }
-
-
-    if (!videos) {
+    if (!showcases) {
         return <div>loading</div>;
     }
 
@@ -49,14 +35,17 @@ const Root = () => {
                 render={() => {
                     return (
                         <ReactFullpage.Wrapper>
-                            <div id="home" className="section">
-                                <HomeContent tags={tags} />
-                            </div>
+                            <Fullpage id="home">
+                                <Home className="section" />
+                            </Fullpage>
+                            <Fullpage>
+                                <Porfolio showcases={showcases}/>
+                            </Fullpage>
                             {
-                                Object.keys(tags).map((tag => (
-                                    <div key={`slide-${tag}`} className="section">
-                                        <CategoryPage name={tag} videos={tags[tag]}/>
-                                    </div>
+                                Object.keys(showcases).map((showcaseName => (
+                                    <Fullpage key={`slide-${showcaseName}`}>
+                                        <CategoryPage categoryName={showcaseName} videos={showcases[showcaseName]}/>
+                                    </Fullpage>
                                 )))
                             }
                         </ReactFullpage.Wrapper>

@@ -1,23 +1,25 @@
 import React, {useState} from 'react';
 import Radium from 'radium';
+import {getVideoImage} from './vimeo';
 
 
 const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{width: '420px'}}>
-    <img style={{width: '100%', ':hover': {filter: 'grayscale(100%)'}}} src={video.image} />
+    <img style={{width: '100%', ':hover': {filter: 'grayscale(100%)'}}} src={getVideoImage(video)} />
 </div>);
 
-const CategoryPage = ({name, videos}) => {
 
+const CategoryPage = ({categoryName, videos}) => {
     const [selected, setSelected] = useState(0);
 
     return <div style={{
         width: '100%',
         height: '100%',
-        backgroundImage: `linear-gradient(black, black), url('${videos[selected].image}')`,
+        backgroundImage: `linear-gradient(black, black), url('${getVideoImage(videos[selected])}')`,
+        backgroundSize: 'cover',
         backgroundBlendMode: 'saturation'
     }}>
         <div style={{position: 'absolute', top: 0, width: '100%', height: '80px', lineHeight: '80px', textAlign: 'center'}}>
-            <h1 style={{ height: '80px'}}>{name}</h1>
+            <h1 style={{ height: '80px'}}>{categoryName}</h1>
         </div>
         <div style={{
             zIndex: 2,
@@ -29,7 +31,7 @@ const CategoryPage = ({name, videos}) => {
         }}>
             <iframe
                 frameBorder="none"
-                src={`https://player.vimeo.com${videos[selected].url}`}
+                src={videos[selected].src}
                 style={{
                     border: 'none',
                     position: 'relative',
@@ -42,7 +44,10 @@ const CategoryPage = ({name, videos}) => {
                 display: 'flex',
                 overflowX: 'scroll',
             }}>
-                {videos.map((video, i) => <VideoThumb onClick={() => setSelected(i)} video={video}/>)}
+                {videos.map((video, i) => <VideoThumb
+                    key={`video-${categoryName}-${video.name}`}
+                    onClick={() => setSelected(i)} video={video}
+                />)}
             </div>
         </div>
     </div>;
