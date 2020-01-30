@@ -11,12 +11,12 @@ function cacheVids(showcases) {
     return showcases;
 }
 
-function checkCache() {
+function checkCache(ignoreTTL = false) {
     const cachedRaw = localStorage.getItem(CACHE_KEY);
     const cached = cachedRaw && JSON.parse(cachedRaw);
 
     // check if expired
-    if (!(cached && new Date().getTime() - cached.ts < TTL)) {
+    if (!(cached && (ignoreTTL || new Date().getTime() - cached.ts < TTL))) {
         return null;
     }
 
@@ -40,6 +40,14 @@ export function fetchShowcases() {
 
         axios.get('http://localhost:3030/api/showcases')
             .then(res => resolve(cacheVids(res.data)))
-            .catch(e => reject(e));
+            .catch(e => {
+                console.error(e);
+                const oldCached = checkCache(true);
+                if (!oldCached) {
+                    reject(e);
+                    return;
+                }
+                resolve(oldCached);
+            });
     });
 }
