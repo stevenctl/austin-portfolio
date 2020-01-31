@@ -1,5 +1,8 @@
 module.exports = {
     entry: './src/index.js',
+    optimization: {
+        usedExports: true,
+    },
     module: {
         rules: [
             {

@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack.config.js --mode development --progress --colors --port 3000",
-    "build": "webpack",
+    "build": "webpack --mode production",
     "deploy": "webpack && aws s3 cp ./dist/bundle.js s3://austin-portfolio-react/ --acl public-read"
   },
   "dependencies": {
