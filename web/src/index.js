@@ -6,26 +6,24 @@ import Home from './home';
 import CategoryPage from './category-page';
 import Header from './header';
 import Porfolio from './porfolio';
+import {StyleRoot} from 'radium';
 
-
-const allowedTags = [
-    'Lindenwood', 'Purler', 'Wedding', 'Travel'
-];
-
-const Fullpage = props => <div className="section" {...props} />
+const Fullpage = props => <div className="section" style={{overflow:'hidden'}}{...props} />
 
 const Root = () => {
     const [showcases, setShowcases] = useState(null);
-    useEffect(() => {
-        fetchShowcases().then(setShowcases);
-    });
 
+    useEffect(() => {
+        if (!showcases) {
+            fetchShowcases().then(setShowcases);
+        }
+    }, [showcases]);
     if (!showcases) {
         return <div>loading</div>;
     }
 
     return (
-        <div>
+        <StyleRoot>
             <Header />
             <ReactFullpage
             //fullpage options
@@ -52,7 +50,7 @@ const Root = () => {
                     );
                 }}
             />
-        </div>);
+        </StyleRoot>);
 };
 
 

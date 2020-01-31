@@ -1,16 +1,22 @@
 import axios from 'axios';
 
-const BASEURL = 'https://austin-portfolio-api-5u4xxdimva-uc.a.run.app/'
+const BASEURL = 'https://austin-portfolio-api-5u4xxdimva-uc.a.run.app/';
+// const BASEURL = 'http://localhost:3030/';
 
 const CACHE_KEY = 'cache:showcases';
 const TTL = 1000 * 60 * 90; // 90 mins
 
 function cacheVids(showcases) {
+    const sorted = {};
+    Object.keys(showcases)
+        .sort((a, b) => showcases[b].length - showcases[a].length)
+        .forEach(key => sorted[key] = showcases[key]);
+
     localStorage.setItem(CACHE_KEY, JSON.stringify({
-        value: showcases,
+        value: sorted,
         ts:  new Date().getTime()
     }));
-    return showcases;
+    return sorted;
 }
 
 function checkCache(ignoreTTL = false) {
