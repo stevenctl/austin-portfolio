@@ -14,7 +14,7 @@ const TagButton = ({...rest}) => (<button
     {...rest}
 />);
 
-const HomeContent = () => (<div style={{padding: '120px'}}>
+const HomeContent = ({portfolioSlide, contactSlide}) => (<div style={{padding: '120px'}}>
     <div style={{display: 'flex', flexDirection: 'column', width: '320px', float: 'left', fontSize: '24pt'}}>
         <Slide enterDelay={1500} left>
             <h1>Capture what <span style={{color: 'goldenrod'}}>moves</span> you.</h1>
@@ -22,10 +22,10 @@ const HomeContent = () => (<div style={{padding: '120px'}}>
 
     </div>
     <div style={{display: 'flex', flexDirection: 'column', width: '240px', float: 'right'}}>
-        <TagButton onClick={() => window.fullpage_api.moveTo(3)}>
+        <TagButton onClick={() => window.fullpage_api.moveTo(portfolioSlide)}>
             Portfolio
         </TagButton>
-        <TagButton onClick={() => window.fullpage_api.moveTo(2)}>
+        <TagButton onClick={() => window.fullpage_api.moveTo(contactSlide)}>
             Contact
         </TagButton>
     </div>

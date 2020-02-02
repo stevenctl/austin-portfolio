@@ -7,8 +7,9 @@ import CategoryPage from './category-page';
 import Header from './header';
 import Porfolio from './porfolio';
 import {StyleRoot} from 'radium';
+import Contact from './contact';
 
-const Fullpage = props => <div className="section" style={{overflow:'hidden'}}{...props} />
+const Fullpage = props => <div className="section" style={{overflow:'hidden'}} {...props} />;
 
 const Root = () => {
     const [showcases, setShowcases] = useState(null);
@@ -24,17 +25,21 @@ const Root = () => {
 
     return (
         <StyleRoot>
-            <Header />
+            <Header homeSlide={1}/>
             <ReactFullpage
             //fullpage options
                 licenseKey = {'B01FF17C-F8E046DC-8CD10AFD-63E5D317'}
                 scrollingSpeed = {1000} /* Options here */
-
+                normalScrollElements = ".normalscroll"
                 render={() => {
                     return (
                         <ReactFullpage.Wrapper>
                             <Fullpage id="home">
-                                <Home className="section" />
+                                <Home
+                                    portfolioSlide={2}
+                                    contactSlide={Object.keys(showcases).length + 3}
+                                    className="section"
+                                />
                             </Fullpage>
                             <Fullpage>
                                 <Porfolio showcases={showcases}/>
@@ -46,6 +51,9 @@ const Root = () => {
                                     </Fullpage>
                                 )))
                             }
+                            <Fullpage id="contact">
+                                <Contact/>
+                            </Fullpage>
                         </ReactFullpage.Wrapper>
                     );
                 }}
