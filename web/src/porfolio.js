@@ -28,6 +28,9 @@ const ShowcaseItem = Radium(({videos, name, panel, proportion}) => ([
     <div key={`showcase-item-${i}`} onClick={() => window.fullpage_api.moveTo(panel)} style={{
         lineHeight: '100%',
         transform: 'skewY(-5deg)',
+        [desktop]: {
+            transform: 'skewX(-5deg)',
+        },
         textAlign: 'center',
         color: 'white',
         transition: 'width 1s ease, height 1s ease',
