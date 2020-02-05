@@ -28,8 +28,8 @@ const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
                 height: '94px',
                 marginRight: '8px',
                 [mobile]: {
-                    width: '40%',
-                    height: 'unset'
+                    width: '40vw',
+                    height: 'calc((9/16) * 40vw)'
                 }
             }}
             src={getVideoImage(video)}
