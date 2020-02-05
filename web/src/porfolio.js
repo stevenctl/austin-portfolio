@@ -35,12 +35,28 @@ const ShowcaseItem = Radium(({videos, name, panel, proportion}) => ([
         color: 'white',
         transition: 'width 1s ease, height 1s ease',
         fontSize: '18px',
-        backgroundImage: `url('${getVideoImage(videos[0])}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        position: 'relative',
+        overflow: 'hidden',
+        transformOrigin: 'top left',
+        paddingLeft: '20px',
+        paddingRight: '20px',
         ...styles
     }}>
-        <h2 style={{height: '100%', lineHeight: '100%'}}>{name}</h2>
+        <div style={{
+            zIndex: -1,
+            position: 'absolute',
+            backgroundImage: `url('${getVideoImage(videos[0])}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            [mobile]: {
+                backgroundPosition: 'top',
+            },
+            top: '-30%', left: '-30%',
+            width: '160%', height: '160%',
+            transform: 'skewX(5deg)',
+            transformOrigin: 'top left',
+        }}/>
+        <h2 style={{position: 'relative', top: '50%', transform: 'translateY(-50%'}}>{name}</h2>
     </div>))));
 
 const Porfolio = Radium(({showcases}) => {

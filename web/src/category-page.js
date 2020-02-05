@@ -11,9 +11,7 @@ function prettyTimestamp(seconds) {
 }
 
 const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
-    marginBottom: '8px',
     minWidth: '100vw',
-    backgroundColor: '#333A',
     ':hover': {
         backgroundColor: '#333D',
     },
@@ -21,20 +19,22 @@ const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
         minWidth: 0,
         maxWidth: '100%'
     },
+    borderTop: '1px solid #666'
 }}>
     <div style={{width: '100%', textAlign: 'left', display: 'flex'}}>
         <img
             style={{
-                width: '40%',
+                width: '168px',
+                height: '94px',
                 marginRight: '8px',
-                [desktop]: {
-                    width: '168px',
-                    height: '94px',
+                [mobile]: {
+                    width: '40%',
+                    height: 'unset'
                 }
             }}
             src={getVideoImage(video)}
         />
-        <div>
+        <div style={{paddingTop: '4px'}}>
             <h3 style={{margin: 0}}>{video.name}</h3>
             <h4  style={{margin: 0}}>{prettyTimestamp(video.duration)}</h4>
         </div>
@@ -85,11 +85,12 @@ const CategoryPage = Radium(({categoryName, videos}) => {
             <div
                 className="normalscroll"
                 style={{
+                    backgroundColor: '#333A',
                     display: 'flex',
                     flexDirection: 'column',
                     width: '100vw',
                     overflow: 'scroll',
-                    maxHeight: `calc(100vh - (9/16) * 100vw - (8px * ${videos.length}))`,
+                    maxHeight: `calc(100vh - (9/16) * 100vw)`,
                     [desktop]: {
                         width: '300px',
                         maxHeight: 'calc(100vh - 120px)',

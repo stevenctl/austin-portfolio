@@ -1,5 +1,7 @@
 import React from 'react';
 import Slide from './slide';
+import {mobile} from './breakpoints';
+import Radium from 'radium';
 
 
 const TagButton = ({...rest}) => (<button
@@ -14,14 +16,14 @@ const TagButton = ({...rest}) => (<button
     {...rest}
 />);
 
-const HomeContent = ({portfolioSlide, contactSlide}) => (<div style={{padding: '120px'}}>
+const HomeContent = Radium(({portfolioSlide, contactSlide}) => (<div style={{padding: '120px'}}>
     <div style={{display: 'flex', flexDirection: 'column', width: '320px', float: 'left', fontSize: '24pt'}}>
         <Slide enterDelay={1500} left>
-            <h1>Capture what <span style={{color: 'goldenrod'}}>moves</span> you.</h1>
+            <h1 style={{marginTop: 0}}>Capture what <span style={{color: 'goldenrod'}}>moves</span> you.</h1>
         </Slide>
 
     </div>
-    <div style={{display: 'flex', flexDirection: 'column', width: '240px', float: 'right'}}>
+    <div style={{display: 'flex', flexDirection: 'column', width: '240px', float: 'right', [mobile]: {float: 'left'}}}>
         <TagButton onClick={() => window.fullpage_api.moveTo(portfolioSlide)}>
             Portfolio
         </TagButton>
@@ -38,7 +40,7 @@ const HomeContent = ({portfolioSlide, contactSlide}) => (<div style={{padding: '
         top: '50%',
         transform: 'translate(-50%, -50%)'
     }} src={'https://austin-portfolio-react.s3.us-east-2.amazonaws.com/hero.webm'} />
-</div>);
+</div>));
 
 
 export default HomeContent;
