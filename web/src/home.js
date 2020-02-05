@@ -31,15 +31,34 @@ const HomeContent = Radium(({portfolioSlide, contactSlide}) => (<div style={{pad
             Contact
         </TagButton>
     </div>
-
-    <video autoPlay style={{
-        zIndex: -1,
+    <div style={{
         position: 'absolute',
-        height: '100vh',
-        left: '50%',
-        top: '50%',
-        transform: 'translate(-50%, -50%)'
-    }} src={'https://austin-portfolio-react.s3.us-east-2.amazonaws.com/hero.webm'} />
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        zIndex: -1,
+        pointerEvents: 'none',
+        overflow: 'hidden',
+    }}>
+        <iframe
+            src="https://player.vimeo.com/video/389400146?background=1"
+            allow="autoplay"
+            style={{
+                top:' 50%',
+                left:' 50%',
+                zIndex: -1,
+                position: 'absolute',
+
+                width: '100vw',
+                height:' 56.25vw',
+                minHeight: '100vh',
+                minWidth: '177.77vh',
+                transform: 'translate(-50%, -50%)',
+
+            }}
+        />
+    </div>
 </div>));
 
 

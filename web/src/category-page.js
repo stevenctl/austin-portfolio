@@ -26,7 +26,6 @@ const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
             style={{
                 width: '168px',
                 height: '94px',
-                marginRight: '8px',
                 [mobile]: {
                     width: '40vw',
                     height: 'calc((9/16) * 40vw)'
@@ -34,7 +33,7 @@ const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
             }}
             src={getVideoImage(video)}
         />
-        <div style={{paddingTop: '4px'}}>
+        <div style={{paddingTop: '4px', marginLeft: '8px',}}>
             <h3 style={{margin: 0}}>{video.name}</h3>
             <h4  style={{margin: 0}}>{prettyTimestamp(video.duration)}</h4>
         </div>
