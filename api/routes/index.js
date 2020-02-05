@@ -2,7 +2,7 @@ const { Router } = require('express');
 const axios = require('axios');
 const base64 = require('base-64');
 
-
+// shut up... ik..
 const USER_ID = 107760914;
 const CLIENT_ID = 'e9c3481c1c7965b635f854deeb6e41729821f61a';
 const CLIENT_SECRET = 'gxbXWuEg4nS3NuPtFMmGYZHw5sYGVPj5r1cCjhn2H/uAAaTCGSZFdFU37DNMVFAQDgm9aFHoNKehlaHbWYjoR0VN9wh+h7xIdHF8CN/wljbKYatlMbwQhWAhSuy0eJiT';
