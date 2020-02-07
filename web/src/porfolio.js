@@ -3,6 +3,22 @@ import {getVideoImage} from './vimeo';
 import Radium from 'radium';
 import {desktop, mobile} from './breakpoints';
 
+const awsroot = 'https://austin-portfolio-react.s3.us-east-2.amazonaws.com/';
+
+const showcaseImageOverrides = {
+    'Purler Wrestling Academy': awsroot + 'pwa.png',
+    'Lindenwood': awsroot + 'lu.png',
+    'More': awsroot + 'challenger.png',
+};
+
+function getShowcaseImage(name, video) {
+    if (name in showcaseImageOverrides) {
+        return showcaseImageOverrides[name];
+    }
+
+    return getVideoImage(video);
+}
+
 const ShowcaseItem = Radium(({videos, name, panel, proportion}) => ([
     {
         height: '100%',
@@ -45,7 +61,7 @@ const ShowcaseItem = Radium(({videos, name, panel, proportion}) => ([
         <div style={{
             zIndex: -1,
             position: 'absolute',
-            backgroundImage: `url('${getVideoImage(videos[0])}')`,
+            backgroundImage: `url('${getShowcaseImage(name, videos[0])}')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             [mobile]: {
