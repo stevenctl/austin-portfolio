@@ -66,13 +66,20 @@ const ShowcaseItem = Radium(({videos, name, panel, proportion}) => ([
             backgroundPosition: 'center',
             [mobile]: {
                 backgroundPosition: 'top',
+                top: i === 0 ? 0 : '-30%',
+                height: '160%',
+                width: '100%',
+                left: 0,
+                transform: 'skewY(5deg)',
             },
-            top: '-30%', left: '-30%',
-            width: '160%', height: '160%',
+            top: 0,
+            height: '100%',
+            left: '-30%',
+            width: '160%',
             transform: 'skewX(5deg)',
             transformOrigin: 'top left',
         }}/>
-        <h2 style={{position: 'relative', top: '50%', transform: 'translateY(-50%'}}>{name}</h2>
+        <h2 style={{position: 'relative', top: '50%', transform: 'translateY(-50%)'}}>{name}</h2>
     </div>))));
 
 const Porfolio = Radium(({showcases}) => {
