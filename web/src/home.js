@@ -4,17 +4,20 @@ import {mobile} from './breakpoints';
 import Radium from 'radium';
 
 
-const TagButton = ({...rest}) => (<button
+const TagButton = Radium(({...rest}) => (<button
     style={{
         padding: '16px',
-        border: 'none',
+        border: '1px solid goldenrod',
         marginBottom: '4px',
         color: 'white',
-        background: 'goldenrod',
-        fontSize: '20px'
+        background: 'transparent',
+        [':hover']: {
+            background: '#FFF3'
+        },
+        fontSize: '20px',
     }}
     {...rest}
-/>);
+/>));
 
 const HomeContent = Radium(({portfolioSlide, contactSlide}) => (<div style={{padding: '120px'}}>
     <div style={{display: 'flex', flexDirection: 'column', width: '320px', float: 'left', fontSize: '24pt'}}>
