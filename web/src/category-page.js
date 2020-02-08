@@ -41,6 +41,16 @@ const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
 </div>);
 
 
+const gradients ={
+    'Purler Wrestling Academy': 'rgb(132,0,0)',
+    'Lindenwood': 'rgb(179,137,60)',
+    'More': 'rgb(0,102,179)',
+};
+
+function getGradientColor(categoryName) {
+    return gradients[categoryName];
+}
+
 const CategoryPage = Radium(({categoryName, videos}) => {
     const [selected, setSelected] = useState(0);
     const [autoplay, setAutoplay] = useState(false);
@@ -51,7 +61,7 @@ const CategoryPage = Radium(({categoryName, videos}) => {
             paddingTop: '0'
         },
         width: '100vw', height: '100vh',
-        backgroundImage: `linear-gradient(black, black), url('${getVideoImage(videos[selected])}')`,
+        backgroundImage: `linear-gradient(120deg, rgba(16,16,16,1) 67%, ${getGradientColor(categoryName)} 100%)`,
         backgroundSize: 'cover',
         backgroundBlendMode: 'saturation',
         textAlign: 'center',
@@ -89,7 +99,7 @@ const CategoryPage = Radium(({categoryName, videos}) => {
                     flexDirection: 'column',
                     width: '100vw',
                     overflow: 'scroll',
-                    maxHeight: `calc(100vh - (9/16) * 100vw)`,
+                    maxHeight: 'calc(100vh - (9/16) * 100vw)',
                     [desktop]: {
                         width: '300px',
                         maxHeight: 'calc(100vh - 120px)',

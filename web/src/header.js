@@ -19,7 +19,8 @@ const Header = Radium(({homeSlide}) => {
         <div style={{...dockedStyle}}>
             <a href="#" onClick={() => window.fullpage_api.moveTo(homeSlide)}>
                 <img src={'https://austin-portfolio-react.s3.us-east-2.amazonaws.com/logo-white.png'} style={{
-                    height: '120px',
+                    marginLeft: '8px',
+                    height: '100px',
                     [mobile]: {height: '48px'}
                 }}/>
             </a>
