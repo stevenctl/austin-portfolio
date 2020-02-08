@@ -130,7 +130,7 @@ const VideoList = Radium(({videos, categoryName, setAutoplay, setSelected}) =>  
             flexDirection: 'column',
             width: '100vw',
             overflow: 'scroll',
-            height: 'calc(100vh - (9/16) * 100vw)',
+            height: `calc(${window.innerHeight}px - (9/16) * 100vw)`,
             [desktop]: {
                 width: '300px',
                 height: 'fit-content',
