@@ -87,7 +87,6 @@ const CategoryPage = Radium(({categoryName, videos}) => {
         width: '100vw', height: '100vh',
         backgroundImage: `linear-gradient(120deg, rgba(16,16,16,1) 67%, ${getGradientColor(categoryName)} 100%)`,
         backgroundSize: 'cover',
-        backgroundBlendMode: 'saturation',
         textAlign: 'center',
     }}>
         <div style={{
