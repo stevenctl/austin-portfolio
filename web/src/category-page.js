@@ -41,6 +41,30 @@ const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
 </div>);
 
 
+const NavItem = Radium(({up = false, down = false}) => <div onClick={() => {
+    if (up) {
+        window.fullpage_api.moveSectionUp();
+    } else if (down) {
+        window.fullpage_api.moveSectionDown();
+    }
+}} style={{
+    paddingTop: '12px',
+    paddingBottom: '12px',
+    minWidth: '100vw',
+    ':hover': {
+        backgroundColor: '#333D',
+    },
+    [desktop]: {
+        display: 'none'
+    },
+    borderTop: '1px solid #666'
+}}>
+    <div style={{width: '100%', textAlign: 'center', display: 'flex'}}>
+        <i style={{marginLeft: 'auto', marginRight: 'auto'}} className={`fas fa-chevron-${up ? 'up' : 'down'}`}/>
+    </div>
+</div>);
+
+
 const gradients ={
     'Purler Wrestling Academy': 'rgb(132,0,0)',
     'Lindenwood': 'rgb(179,137,60)',
@@ -91,33 +115,40 @@ const CategoryPage = Radium(({categoryName, videos}) => {
                     }
                 }}
             />
-            <div
-                className="normalscroll"
-                style={{
-                    backgroundColor: '#333A',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    width: '100vw',
-                    overflow: 'scroll',
-                    height: 'calc(100vh - (9/16) * 100vw)',
-                    [desktop]: {
-                        width: '300px',
-                        height: 'fit-content',
-                        maxHeight: 'calc(100vh - 120px)',
-                    }
-                }}>
-                {videos.map((video, i) =>
-                    <VideoThumb
-                        key={`video-${categoryName}-${video.name}`}
-                        onClick={() => {
-                            setAutoplay(true);
-                            setSelected(i);
-                        }} video={video}
-                    />
-                )}
-            </div>
+            <VideoList videos={videos} categoryName={categoryName} setAutoplay={setAutoplay} setSelected={setSelected} />
         </div>
     </div>;
 });
+
+// eslint-disable-next-line react/prop-types
+const VideoList = Radium(({videos, categoryName, setAutoplay, setSelected}) =>  (
+    <div
+        className="normalscroll"
+        style={{
+            backgroundColor: '#333A',
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100vw',
+            overflow: 'scroll',
+            height: 'calc(100vh - (9/16) * 100vw)',
+            [desktop]: {
+                width: '300px',
+                height: 'fit-content',
+                maxHeight: 'calc(100vh - 120px)',
+            }
+        }}>
+        <NavItem up/>
+        {videos.map((video, i) =>
+            <VideoThumb
+                key={`video-${categoryName}-${video.name}`}
+                onClick={() => {
+                    setAutoplay(true);
+                    setSelected(i);
+                }} video={video}
+            />
+        )}
+        <NavItem down/>
+    </div>
+));
 
 export default CategoryPage;

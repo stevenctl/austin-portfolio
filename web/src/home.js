@@ -19,7 +19,7 @@ const TagButton = Radium(({...rest}) => (<button
     {...rest}
 />));
 
-const HomeContent = Radium(({portfolioSlide, contactSlide}) => (<div style={{padding: '120px'}}>
+const HomeContent = Radium(({portfolioSlide, contactSlide}) => (<div style={{padding: '120px', [mobile]: {padding: '20px'}}}>
     <div style={{display: 'flex', flexDirection: 'column', width: '320px', float: 'left', fontSize: '24pt'}}>
         <Slide enterDelay={1500} left>
             <h1 style={{marginTop: 0}}>Capture what <span style={{color: 'goldenrod'}}>moves</span> you.</h1>
