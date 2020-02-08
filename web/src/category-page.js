@@ -99,9 +99,10 @@ const CategoryPage = Radium(({categoryName, videos}) => {
                     flexDirection: 'column',
                     width: '100vw',
                     overflow: 'scroll',
-                    maxHeight: 'calc(100vh - (9/16) * 100vw)',
+                    height: 'calc(100vh - (9/16) * 100vw)',
                     [desktop]: {
                         width: '300px',
+                        height: 'fit-content',
                         maxHeight: 'calc(100vh - 120px)',
                     }
                 }}>
