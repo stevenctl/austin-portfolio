@@ -1,7 +1,7 @@
 FROM node:latest
 
 ADD bin/ /usr/local/bin
-ADD public/ /usr/local/public
+# ADD public/ /usr/local/public
 ADD routes/ /usr/local/routes
 ADD .eslintrc app.js package.json yarn.lock /usr/local/
 

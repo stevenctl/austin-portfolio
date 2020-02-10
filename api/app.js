@@ -15,7 +15,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   // res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); // uncomment for local dev
-  res.header('Access-Control-Allow-Origin', 'https://austin-portfolio-react.s3.us-east-2.amazonaws.com/');
+  // res.header('Access-Control-Allow-Origin', 'https://austin-portfolio-react.s3.us-east-2.amazonaws.com/');
+  res.header('Access-Control-Allow-Origin', 'http://www.austinlandowvideo.com');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
