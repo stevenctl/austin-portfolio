@@ -3,12 +3,11 @@ import {getVideoImage} from './vimeo';
 import Radium from 'radium';
 import {desktop, mobile} from './breakpoints';
 
-const awsroot = 'https://austin-portfolio-react.s3.us-east-2.amazonaws.com/';
 
 const showcaseImageOverrides = {
-    'Purler Wrestling Academy': awsroot + 'pwa.png',
-    'Lindenwood': awsroot + 'lu.png',
-    'More': awsroot + 'challenger.png',
+    'Purler Wrestling Academy': 'pwa.png',
+    'Lindenwood': 'lu.png',
+    'More': 'challenger.png',
 };
 
 function getShowcaseImage(name, video) {
