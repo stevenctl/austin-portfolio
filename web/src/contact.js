@@ -13,9 +13,7 @@ const Contact =Radium(() => (<div style={{
     width: '100%',
     maxHeight: '100vh',
     backgroundImage: `linear-gradient(rgb(16, 16, 16) 70%, ${gradient} 100%)`,
-    paddingTop: '120px',
     [mobile]: {
-        paddingTop: '40px',
         flexDirection: 'column',
     },
     display: 'flex',
