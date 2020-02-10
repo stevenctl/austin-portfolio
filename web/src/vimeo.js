@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const BASEURL = 'https://austin-portfolio-api-5u4xxdimva-uc.a.run.app/';
-// const BASEURL = 'http://localhost:3030/';
+// const BASEURL = 'https://austin-portfolio-api-5u4xxdimva-uc.a.run.app/';
+const BASEURL = 'http://localhost:3030/';
 
 const CACHE_KEY = 'cache:showcases';
 const TTL = 1000 * 60 * 90; // 90 mins

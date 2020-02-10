@@ -10,16 +10,19 @@ function prettyTimestamp(seconds) {
     return `${minutes}:${additionalSeconds < 10 ? '0' : ''}${additionalSeconds}`;
 }
 
-const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
+const thumbStyles = {
     minWidth: '100vw',
     ':hover': {
-        backgroundColor: '#333D',
+        backgroundColor: '#DDD5',
     },
+};
+
+const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
+    ...thumbStyles,
     [desktop]: {
         minWidth: 0,
         maxWidth: '100%'
     },
-    borderTop: '1px solid #666'
 }}>
     <div style={{width: '100%', textAlign: 'left', display: 'flex'}}>
         <img
@@ -35,7 +38,7 @@ const VideoThumb = Radium(({video, onClick}) => <div onClick={onClick} style={{
         />
         <div style={{paddingTop: '4px', marginLeft: '8px',}}>
             <h3 style={{margin: 0}}>{video.name}</h3>
-            <h4  style={{margin: 0}}>{prettyTimestamp(video.duration)}</h4>
+            <h4 style={{margin: 0, color: '#aaa'}}>{prettyTimestamp(video.duration)}</h4>
         </div>
     </div>
 </div>);
@@ -48,16 +51,12 @@ const NavItem = Radium(({up = false, down = false}) => <div onClick={() => {
         window.fullpage_api.moveSectionDown();
     }
 }} style={{
+    ...thumbStyles,
     paddingTop: '12px',
     paddingBottom: '12px',
-    minWidth: '100vw',
-    ':hover': {
-        backgroundColor: '#333D',
-    },
     [desktop]: {
-        display: 'none'
-    },
-    borderTop: '1px solid #666'
+        display: 'none',
+    }
 }}>
     <div style={{width: '100%', textAlign: 'center', display: 'flex'}}>
         <i style={{marginLeft: 'auto', marginRight: 'auto'}} className={`fas fa-chevron-${up ? 'up' : 'down'}`}/>
@@ -80,14 +79,13 @@ const CategoryPage = Radium(({categoryName, videos}) => {
     const [autoplay, setAutoplay] = useState(false);
 
     return <div style={{
-        paddingTop: '120px',
-        [mobile]: {
-            paddingTop: '0'
-        },
         width: '100vw', height: '100vh',
         backgroundImage: `linear-gradient(120deg, rgba(16,16,16,1) 67%, ${getGradientColor(categoryName)} 100%)`,
         backgroundSize: 'cover',
         textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
     }}>
         <div style={{
             display: 'flex',
@@ -95,6 +93,9 @@ const CategoryPage = Radium(({categoryName, videos}) => {
             flexWrap: 'wrap',
             [mobile]: {
                 flexDirection: 'column',
+            },
+            [desktop]: {
+                marginTop: '80px'
             }
         }}>
             <iframe
@@ -124,13 +125,13 @@ const VideoList = Radium(({videos, categoryName, setAutoplay, setSelected}) =>  
     <div
         className="normalscroll"
         style={{
-            backgroundColor: '#333A',
             display: 'flex',
             flexDirection: 'column',
             width: '100vw',
             overflow: 'scroll',
             height: `calc(${window.innerHeight}px - (9/16) * 100vw)`,
             [desktop]: {
+                marginLeft: '60px',
                 width: '300px',
                 height: 'fit-content',
                 maxHeight: 'calc(100vh - 120px)',
