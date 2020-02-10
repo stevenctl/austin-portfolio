@@ -11,6 +11,7 @@ const IconLink = ({icon, href}) => <a style={{margin: '16px', color: 'goldenrod'
 const Contact =Radium(() => (<div style={{
     height: '100%',
     width: '100%',
+    maxHeight: '100vh',
     backgroundImage: `linear-gradient(rgb(16, 16, 16) 70%, ${gradient} 100%)`,
     paddingTop: '120px',
     [mobile]: {
