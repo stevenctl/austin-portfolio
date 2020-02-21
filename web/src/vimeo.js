@@ -6,17 +6,12 @@ const BASEURL = 'http://localhost:3030/';
 const CACHE_KEY = 'cache:showcases';
 const TTL = 1000 * 60 * 90; // 90 mins
 
-function cacheVids(showcases) {
-    const sorted = {};
-    Object.keys(showcases)
-        .sort((a, b) => showcases[b].length - showcases[a].length)
-        .forEach(key => sorted[key] = showcases[key]);
-
+function cacheShowcases(showcases) {
     localStorage.setItem(CACHE_KEY, JSON.stringify({
-        value: sorted,
+        value: showcases,
         ts:  new Date().getTime()
     }));
-    return sorted;
+    return showcases;
 }
 
 function checkCache(ignoreTTL = false) {
@@ -47,7 +42,7 @@ export function fetchShowcases() {
         }
 
         axios.get(`${BASEURL}api/showcases`)
-            .then(res => resolve(cacheVids(res.data)))
+            .then(res => resolve(cacheShowcases(res.data)))
             .catch(e => {
                 console.error(e);
                 const oldCached = checkCache(true);
