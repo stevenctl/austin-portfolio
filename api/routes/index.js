@@ -74,6 +74,15 @@ function authenticate() {
 
 const embedPrefix = 'https://player.vimeo.com/video/';
 
+const showcasePriority = (showcase) => {
+  const match = /^\[(\d+)\]/.exec(showcase.description);
+  if (!match) {
+    return -1;
+  }
+  console.log(`${showcase.name} ${match[1]}`);
+  return match[1];
+}
+
 const mapVideo = (video) => ({
   name: video.name,
   src: `${embedPrefix}${video.uri.split('/')[2]}`,
@@ -102,7 +111,7 @@ router.get('/api/showcases', (req, res, next) => {
   authenticate().then((_) => {
     axios.get(`https://api.vimeo.com/users/${USER_ID}/albums`, conf()).then((showcasesRes) => {
       const showcases = showcasesRes.data.data;
-      const requests = showcases.map((sc) => axios.get(`https://api.vimeo.com${sc.uri}/videos?sort=manual`, conf()));
+      const requests = showcases.sort((a, b) => showcasePriority(b) - showcasePriority(a)).map((sc) => axios.get(`https://api.vimeo.com${sc.uri}/videos?sort=manual`, conf()));
       Promise.all(requests).then((results) => {
         const payload = {};
         results.forEach((vidRes, i) => {
