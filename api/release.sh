@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # build
-IMAGE_VERSION=1.0.1-production
+IMAGE_VERSION=1.0.4-production
 TAG="austin-portfolio-api:${IMAGE_VERSION}"
 docker build -t $TAG .
 
