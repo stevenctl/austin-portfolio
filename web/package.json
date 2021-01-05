@@ -17,7 +17,7 @@
     "@emotion/styled": "^10.0.27",
     "@fullpage/react-fullpage": "^0.1.17",
     "@react-hook/window-scroll": "^1.0.7",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-loader": "^8.0.6",
     "base-64": "^0.1.0",
     "eslint": "^6.8.0",
