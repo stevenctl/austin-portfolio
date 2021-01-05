@@ -9,7 +9,7 @@
     "test": "mocha --recursive"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "base-64": "^0.1.0",
     "cookie-parser": "^1.4.4",
     "debug": "^4.1.1",
